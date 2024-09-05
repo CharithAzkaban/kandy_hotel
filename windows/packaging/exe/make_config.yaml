@@ -1,0 +1,12 @@
+# The value of AppId uniquely identifies this application.
+# Do not use the same AppId value in installers for other applications.
+app_id: 5B599538-42B1-4826-A479-AF079F21A65E
+publisher: LeanFlutter
+publisher_url: https://github.com/leanflutter/flutter_distributor
+display_name: Kandy Hotel
+create_desktop_icon: true
+install_dir_name: C:/Program Files/Kandy Hotel
+script_template: inno_setup.iss
+locales:
+  - en
+  - zh
