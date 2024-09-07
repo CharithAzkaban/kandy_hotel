@@ -1,0 +1,1 @@
+const feedUrl = 'https://raw.githubusercontent.com/CharithAzkaban/kandy_hotel/dist/appcast.xml';
