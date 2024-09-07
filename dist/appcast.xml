@@ -5,11 +5,11 @@
         <description>Most recent updates to Kandy Hotel</description>
         <language>en</language>
         <item>
-            <title>Version 1.0.1</title>
+            <title>Version 1.0.0</title>
             <pubDate>Fri, 01 Mar 2024 12:00:00 +0800</pubDate>
-            <enclosure url="https://raw.githubusercontent.com/CharithAzkaban/kandy_hotel/dist/setup.exe"
+            <enclosure url="https://charithazkaban.github.io/updates/setup.exe"
                        sparkle:dsaSignature="MDwCHB7cWj3PA/TbmE000gyAKHSvBIJRCBwwFNuOSyQCHF6cvBjxEM9IS7GczF3IkLP18fXt/vx44oLlG5c="
-                       sparkle:version="1.0.1+2"
+                       sparkle:version="1.0.0+1"
                        sparkle:os="windows"
                        length="0"
                        type="application/octet-stream" />
