@@ -24,6 +24,7 @@ class VaaruTff extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? enabled;
   final bool showEye;
+  final bool autofocus;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? formatters;
@@ -51,6 +52,7 @@ class VaaruTff extends StatelessWidget {
     this.enabled,
     this.readOnly = false,
     this.showEye = false,
+    this.autofocus = false,
     this.prefixIcon,
     this.suffixIcon,
     this.formatters,
@@ -67,6 +69,7 @@ class VaaruTff extends StatelessWidget {
         valueListenable: showPasswordListener,
         builder: (context, show, _) => TextFormField(
           cursorColor: grey,
+          autofocus: autofocus,
           keyboardType:
               obscureText ? TextInputType.visiblePassword : keyboardType,
           textAlign: align,

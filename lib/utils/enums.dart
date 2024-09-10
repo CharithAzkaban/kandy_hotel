@@ -1,10 +1,13 @@
+enum Collections {
+  products,
+}
+
 enum Debounces {
   LOADING,
 }
 
 enum Images {
   logo,
-  logotext,
 }
 
 enum Prefs {
@@ -13,12 +16,9 @@ enum Prefs {
 }
 
 enum Routes {
-  createpassword,
-  home,
+  dashboard,
+  inventory,
   landing,
-  submitotp,
-  registration,
-  requestotp,
 }
 
 enum StatusTypes {

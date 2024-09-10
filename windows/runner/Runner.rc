@@ -97,12 +97,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "kandy_hotel" "\0"
+            VALUE "FileDescription", "New Orchid Cafe" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "kandy_hotel" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "kandy_hotel.exe" "\0"
-            VALUE "ProductName", "kandy_hotel" "\0"
+            VALUE "InternalName", "New Orchid Cafe" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Vaaru.lk. All rights reserved." "\0"
+            VALUE "OriginalFilename", "new_orchid_cafe.exe" "\0"
+            VALUE "ProductName", "New Orchid Cafe" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
