@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:kandy_hotel/features/inventory/inventory_screen.dart';
+import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/utils/actions.dart';
 import 'package:kandy_hotel/utils/attributes.dart';
 import 'package:kandy_hotel/utils/constants.dart';
 import 'package:kandy_hotel/utils/enums.dart';
+import 'package:kandy_hotel/utils/methods.dart';
 import 'package:kandy_hotel/widgets/gap.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   static const page = Routes.dashboard;
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => provider<ProductProvider>(context).loadProducts(context));
+  }
 
   @override
   Widget build(BuildContext context) => Padding(

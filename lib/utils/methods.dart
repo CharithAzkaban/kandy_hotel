@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:hive/hive.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import 'attributes.dart';
 import 'enums.dart';
@@ -79,6 +81,9 @@ bool onlyDigits(String? text) {
   return pattern.hasMatch(textOrEmpty(text));
 }
 
+Future<Box<T>> openHiveBox<T extends HiveObject>(Boxes box) =>
+    Hive.openBox<T>(ets(box));
+
 String price(num value) => MoneyFormatter(
       amount: value.toDouble(),
       settings: MoneyFormatterSettings(
@@ -148,6 +153,8 @@ String? textOrNull(String? text) =>
     (text == null || text.trim().isEmpty) ? null : text.trim();
 
 void unfocus() => FocusManager.instance.primaryFocus?.unfocus();
+
+String uuid() => const Uuid().v1();
 
 // Temp
 void pp(

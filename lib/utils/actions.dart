@@ -4,10 +4,11 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kandy_hotel/widgets/popup_action.dart';
 import 'package:kandy_hotel/widgets/vaaru_text.dart';
+import 'package:local_notifier/local_notifier.dart';
 
 import 'attributes.dart';
-import 'constants.dart';
 import 'enums.dart';
 import 'methods.dart';
 
@@ -34,17 +35,13 @@ void confirm(
           label: dismissLabel,
           labelColor: dismissColor ?? error,
           onPressed: () {
-            pop(context);
             if (onDismiss != null) onDismiss();
           },
         ),
         PopupAction(
           label: confirmLabel,
           labelColor: confirmColor ?? primary,
-          onPressed: () {
-            pop(context);
-            onConfirm();
-          },
+          onPressed: onConfirm,
         ),
       ],
     );
@@ -102,6 +99,18 @@ void navigate<T>(
               extra: extra,
             )
             .then(onValue ?? (_) {});
+
+void notify({
+  required String title,
+  required String body,
+}) {
+  final notification = LocalNotification(
+    title: title,
+    body: body,
+    silent: true,
+  );
+  notification.show();
+}
 
 void pop<T>(
   BuildContext context, {
@@ -198,35 +207,4 @@ void waiting<T>(
       );
     }
   });
-}
-
-// <---------- WIDGETS ---------->
-
-class PopupAction extends StatelessWidget {
-  final String label;
-  final Color? labelColor;
-  final void Function()? onPressed;
-  final bool manualPop;
-  const PopupAction({
-    super.key,
-    required this.label,
-    required this.onPressed,
-    this.manualPop = false,
-    this.labelColor,
-  });
-
-  @override
-  Widget build(BuildContext context) => TextButton(
-        onPressed: onPressed != null
-            ? () {
-                if (!manualPop) pop(context);
-                onPressed!();
-              }
-            : null,
-        child: VaaruText(
-          label,
-          weight: FontWeight.bold,
-          color: onPressed != null ? (labelColor ?? primary) : grey,
-        ),
-      );
 }

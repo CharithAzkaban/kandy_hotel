@@ -1,8 +1,9 @@
-enum Collections {
+enum Boxes {
   products,
 }
 
 enum Debounces {
+  FILTER,
   LOADING,
 }
 

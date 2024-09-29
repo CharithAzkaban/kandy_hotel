@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kandy_hotel/service/system_services.dart';
+import 'package:kandy_hotel/services/system_services.dart';
 import 'package:kandy_hotel/utils/enums.dart';
 import 'package:kandy_hotel/utils/methods.dart';
 import 'package:kandy_hotel/widgets/gap.dart';

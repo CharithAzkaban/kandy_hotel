@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
-import 'package:kandy_hotel/utils/enums.dart';
-import 'package:kandy_hotel/utils/methods.dart';
+import 'package:local_notifier/local_notifier.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'providers/auth_provider.dart';
-import 'service/system_services.dart';
+import 'services/system_services.dart';
 import 'utils/attributes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
+  await localNotifier.setup(appName: 'New Orchid Cafe');
   const windowOptions = WindowOptions(
     minimumSize: Size(
       1264.0,
@@ -26,9 +27,11 @@ void main() async {
     await windowManager.show();
     await windowManager.focus();
   });
-  await Hive.initFlutter();
-  await Hive.openBox(ets(Collections.products));
+
   await checkForUpdates(background: true);
+
+  _initDatabase();
+
   runApp(
     MultiProvider(
       providers: [
@@ -38,6 +41,11 @@ void main() async {
       child: const Main(),
     ),
   );
+}
+
+void _initDatabase() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ProductAdapter());
 }
 
 class Main extends StatelessWidget {
