@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/services/product_services.dart';
 import 'package:kandy_hotel/utils/actions.dart';
+import 'package:kandy_hotel/utils/attributes.dart';
+import 'package:kandy_hotel/utils/constants.dart';
 import 'package:kandy_hotel/utils/enums.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -32,6 +34,40 @@ class ProductProvider extends ChangeNotifier {
             _filteredProducts.add(product);
           }
           notify(title: 'Added', body: 'A new product has been added successfully.');
+          notifyListeners();
+        },
+      );
+
+  void editProduct(
+    BuildContext context, {
+    required dynamic key,
+    required String id,
+    required String name,
+    required double buyingPrice,
+    required double sellingPrice,
+  }) =>
+      waiting(
+        context,
+        waitingMessage: 'Modifying...',
+        process: () => ProductServices.editProduct(
+          key: key,
+          id: id,
+          name: name,
+          buyingPrice: buyingPrice,
+          sellingPrice: sellingPrice,
+        ),
+        afterProcessed: (product) {
+          final index = _products.indexWhere((element) => element.id == product.id);
+          if (index != -1) {
+            _products.removeAt(index);
+            _products.insert(index, product);
+          }
+          final filterIndex = _filteredProducts.indexWhere((element) => element.id == product.id);
+          if (filterIndex != -1) {
+            _filteredProducts.removeAt(filterIndex);
+            _filteredProducts.insert(filterIndex, product);
+          }
+          notify(title: 'Modified', body: 'A new product has been modified successfully.');
           notifyListeners();
         },
       );
@@ -67,6 +103,10 @@ class ProductProvider extends ChangeNotifier {
       confirm(
         context,
         confirmMessage: 'Would you like to remove "${product.name}"?',
+        confirmColor: error,
+        dismissColor: blue,
+        confirmLabel: 'REMOVE',
+        dismissLabel: 'KEEP',
         onConfirm: () => waiting(
           context,
           process: () => ProductServices.removeProduct(product.key),

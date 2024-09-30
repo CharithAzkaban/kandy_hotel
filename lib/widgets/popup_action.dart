@@ -21,19 +21,17 @@ class PopupAction<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        onPressed: onPressed != null
-            ? () {
-                if (validationKey != null) {
-                  if (validationKey!.currentState!.validate()) {
-                    pop(context, result: popResult);
-                    waitAndDo(300, onPressed);
-                  }
-                } else {
-                  pop(context, result: popResult);
-                  waitAndDo(300, onPressed);
-                }
-              }
-            : () => pop(context, result: popResult),
+        onPressed: () {
+          if (validationKey != null) {
+            if (validationKey!.currentState!.validate()) {
+              pop(context, result: popResult);
+              waitAndDo(300, onPressed);
+            }
+          } else {
+            pop(context, result: popResult);
+            waitAndDo(300, onPressed);
+          }
+        },
         child: VaaruText(
           label,
           weight: FontWeight.bold,
