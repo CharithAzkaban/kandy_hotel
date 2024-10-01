@@ -18,7 +18,7 @@ class SaleAdapter extends TypeAdapter<Sale> {
     };
     return Sale(
       id: fields[0] as String,
-      products: (fields[1] as List).cast<SaleItem>(),
+      products: (fields[1] as List).cast<SaleProduct>(),
       discount: fields[2] as double,
       createdAt: fields[3] as DateTime,
     );

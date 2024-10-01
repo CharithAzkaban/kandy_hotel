@@ -32,7 +32,7 @@ class VaaruMenu<T> extends StatelessWidget {
                   child: ListTile(
                     title: VaaruText(
                       item.label,
-                      color: item.color,
+                      color: item.enabled ? item.color: grey,
                       align: TextAlign.left,
                     ),
                     subtitle: item.subLabel != null

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
+import 'package:kandy_hotel/providers/sale_provider.dart';
 import 'package:kandy_hotel/utils/actions.dart';
 import 'package:kandy_hotel/utils/attributes.dart';
 import 'package:kandy_hotel/utils/constants.dart';
 import 'package:kandy_hotel/utils/methods.dart';
 import 'package:kandy_hotel/widgets/gap.dart';
 import 'package:kandy_hotel/widgets/popup_action.dart';
+import 'package:kandy_hotel/widgets/vaaru_icon_button.dart';
 import 'package:kandy_hotel/widgets/vaaru_menu.dart';
 import 'package:kandy_hotel/widgets/vaaru_text.dart';
+import 'package:provider/provider.dart';
 
 import 'product_form.dart';
 
@@ -62,32 +65,47 @@ class ProductItem extends StatelessWidget {
             ),
           ],
         ),
-        trailing: VaaruMenu(
-          tooltip: product.name,
-          items: [
-            VaaruMenuItem(
-              value: 1,
-              label: 'MODIFY',
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Consumer<SaleProvider>(builder: (context, saleData, _) {
+              final isAdded = saleData.saleItems.where((element) => element.product.id == product.id).isNotEmpty;
+              return VaaruMenu(
+                tooltip: product.name,
+                items: [
+                  VaaruMenuItem(
+                    value: 1,
+                    label: 'MODIFY',
+                    color: primary,
+                    enabled: !isAdded,
+                  ),
+                  VaaruMenuItem(
+                    value: 2,
+                    label: 'REMOVE',
+                    color: error,
+                    enabled: !isAdded,
+                  ),
+                ],
+                onSelected: (value) {
+                  final productProvider = provider<ProductProvider>(context);
+                  if (value == 1) {
+                    _editProduct(context);
+                  }
+                  if (value == 2) {
+                    productProvider.removeProduct(
+                      context,
+                      product: product,
+                    );
+                  }
+                },
+              );
+            }),
+            VaaruIconButton(
+              icon: Icons.send_rounded,
               color: primary,
-            ),
-            VaaruMenuItem(
-              value: 2,
-              label: 'REMOVE',
-              color: error,
+              onPressed: () => provider<SaleProvider>(context).addSaleItem(product),
             ),
           ],
-          onSelected: (value) {
-            final productProvider = provider<ProductProvider>(context);
-            if (value == 1) {
-              _editProduct(context);
-            }
-            if (value == 2) {
-              productProvider.removeProduct(
-                context,
-                product: product,
-              );
-            }
-          },
         ),
       );
 

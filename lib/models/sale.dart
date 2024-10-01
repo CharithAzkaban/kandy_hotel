@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:kandy_hotel/models/sale_item.dart';
+import 'package:kandy_hotel/models/sale_product.dart';
 
 part 'sale.g.dart';
 
@@ -9,7 +9,7 @@ class Sale extends HiveObject {
   final String id;
 
   @HiveField(1)
-  final List<SaleItem> products;
+  final List<SaleProduct> products;
 
   @HiveField(2)
   double discount;

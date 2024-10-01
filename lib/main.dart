@@ -3,8 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/models/sale.dart';
-import 'package:kandy_hotel/models/sale_item.dart';
+import 'package:kandy_hotel/models/sale_product.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
+import 'package:kandy_hotel/providers/sale_provider.dart';
 import 'package:local_notifier/local_notifier.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => SaleProvider()),
       ],
       child: const Main(),
     ),
@@ -49,7 +51,7 @@ void _initDatabase() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(SaleAdapter());
-  Hive.registerAdapter(SaleItemAdapter());
+  Hive.registerAdapter(SaleProductAdapter());
 }
 
 class Main extends StatelessWidget {

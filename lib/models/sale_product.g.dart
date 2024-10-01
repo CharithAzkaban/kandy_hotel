@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sale_item.dart';
+part of 'sale_product.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SaleItemAdapter extends TypeAdapter<SaleItem> {
+class SaleProductAdapter extends TypeAdapter<SaleProduct> {
   @override
   final int typeId = 1;
 
   @override
-  SaleItem read(BinaryReader reader) {
+  SaleProduct read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SaleItem(
+    return SaleProduct(
       product: fields[0] as Product,
       quantity: fields[1] as double,
     );
   }
 
   @override
-  void write(BinaryWriter writer, SaleItem obj) {
+  void write(BinaryWriter writer, SaleProduct obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -38,7 +38,7 @@ class SaleItemAdapter extends TypeAdapter<SaleItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SaleItemAdapter &&
+      other is SaleProductAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
