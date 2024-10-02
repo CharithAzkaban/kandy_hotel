@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kandy_hotel/features/inventory/widgets/product_form.dart';
 import 'package:kandy_hotel/features/inventory/widgets/product_item.dart';
+import 'package:kandy_hotel/features/inventory/widgets/sale_form.dart';
 import 'package:kandy_hotel/features/inventory/widgets/sale_item.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/providers/sale_provider.dart';
@@ -12,6 +13,7 @@ import 'package:kandy_hotel/utils/methods.dart';
 import 'package:kandy_hotel/widgets/dummy.dart';
 import 'package:kandy_hotel/widgets/gap.dart';
 import 'package:kandy_hotel/widgets/popup_action.dart';
+import 'package:kandy_hotel/widgets/vaaru_button.dart';
 import 'package:kandy_hotel/widgets/vaaru_icon_button.dart';
 import 'package:kandy_hotel/widgets/vaaru_text.dart';
 import 'package:kandy_hotel/widgets/vaaru_tff.dart';
@@ -172,24 +174,38 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       ),
                       const Divider(height: 5.0),
                       const Divider(height: 5.0),
-                      Consumer<SaleProvider>(builder: (context, saleData, _) {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const VaaruText(
-                                'Total',
-                                size: 20.0,
-                              ),
-                              VaaruText(
-                                price(saleData.total),
-                                size: 20.0,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                      Consumer<SaleProvider>(
+                        builder: (context, saleData, _) {
+                          final hasItems = saleData.saleItems.isNotEmpty;
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                VaaruText(
+                                  price(saleData.total),
+                                  size: 20.0,
+                                ),
+                                Row(
+                                  children: [
+                                    VaaruButton(
+                                      label: 'CLEAR CART',
+                                      backgroundColor: error,
+                                      onPressed: hasItems ? () => saleData.clearCart(context) : null,
+                                    ),
+                                    const Gap(h: 10.0),
+                                    VaaruButton(
+                                      label: 'SELL',
+                                      backgroundColor: primary,
+                                      onPressed: hasItems ? () => _sale(context) : null,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -230,6 +246,36 @@ class _InventoryScreenState extends State<InventoryScreen> {
         buyingPrice: double.parse(buyingPriceController.text.trim()),
         sellingPrice: double.parse(sellingPriceController.text.trim()),
         searchController: _searchController,
+      );
+    }
+  }
+
+  void _sale(BuildContext context) async {
+    final formKey = GlobalKey<FormState>();
+    final discountController = TextEditingController();
+    final saleProvider = provider<SaleProvider>(context);
+    final isOk = await popup<bool>(
+      context,
+      title: 'Make Sale',
+      cancelLabel: 'DISMISS',
+      body: SaleForm(
+        formKey: formKey,
+        total: saleProvider.total,
+        discountController: discountController,
+      ),
+      actions: [
+        PopupAction(
+          label: 'SELL',
+          validationKey: formKey,
+          popResult: true,
+        ),
+      ],
+    );
+
+    if (isOk != null && isOk && context.mounted) {
+      saleProvider.makeSale(
+        context,
+        discount: double.tryParse(discountController.text.trim()),
       );
     }
   }

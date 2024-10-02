@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kandy_hotel/utils/constants.dart';
+import 'package:kandy_hotel/utils/methods.dart';
 
 class VaaruTff extends StatelessWidget {
   final TextEditingController? controller;
@@ -11,6 +12,8 @@ class VaaruTff extends StatelessWidget {
   final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final bool readOnly;
+  final bool require;
+  final bool onlyDecimals;
   final String obscuringCharacter = '•';
   final bool obscureText;
   final int maxLines;
@@ -51,6 +54,8 @@ class VaaruTff extends StatelessWidget {
     this.validator,
     this.enabled,
     this.readOnly = false,
+    this.require = false,
+    this.onlyDecimals = false,
     this.showEye = false,
     this.autofocus = false,
     this.prefixIcon,
@@ -70,8 +75,7 @@ class VaaruTff extends StatelessWidget {
         builder: (context, show, _) => TextFormField(
           cursorColor: grey,
           autofocus: autofocus,
-          keyboardType:
-              obscureText ? TextInputType.visiblePassword : keyboardType,
+          keyboardType: obscureText ? TextInputType.visiblePassword : keyboardType,
           textAlign: align,
           controller: controller,
           readOnly: readOnly,
@@ -87,8 +91,20 @@ class VaaruTff extends StatelessWidget {
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
           enabled: enabled,
-          inputFormatters: formatters,
-          validator: validator,
+          inputFormatters: [
+            if (onlyDecimals) FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]*$')),
+            ...(formatters ?? []),
+          ],
+          validator: (text) {
+            final notEmpty = textOrEmpty(text).isNotEmpty;
+            if (require && !notEmpty) {
+              return 'Required.';
+            }
+            if (notEmpty && onlyDecimals && !onlyNumbers(text)) {
+              return 'Invalid number.';
+            }
+            return validator != null ? validator!(text) : null;
+          },
           decoration: InputDecoration(
             prefixText: prefixText,
             labelText: labelText,
@@ -98,9 +114,7 @@ class VaaruTff extends StatelessWidget {
                     onPressed: () => showPasswordListener.value = !show,
                     splashRadius: 20.0,
                     icon: Icon(
-                      show
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded,
+                      show ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                     ),
                   )
                 : suffixIcon,
@@ -109,14 +123,10 @@ class VaaruTff extends StatelessWidget {
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(7.0)),
-              borderSide: BorderSide(
-                color: grey,
-              ),
+              borderSide: BorderSide(color: grey),
             ),
             hintText: hintText,
-            hintStyle: const TextStyle(
-              fontSize: 16.0,
-            ),
+            hintStyle: const TextStyle(fontSize: 16.0),
             prefixIcon: prefixIcon,
           ),
         ),

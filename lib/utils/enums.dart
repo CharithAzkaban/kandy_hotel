@@ -1,5 +1,6 @@
 enum Boxes {
   products,
+  sales,
 }
 
 enum Debounces {

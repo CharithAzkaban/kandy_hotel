@@ -76,8 +76,8 @@ String number(
       : '${doubleFix != null ? number.toStringAsFixed(doubleFix) : number.toString()}${unit == null ? '' : ' ${number == 1 ? unit : pluralUnit ?? '${unit}s'}'}$isOrAre';
 }
 
-bool onlyDigits(String? text) {
-  final pattern = RegExp(r'^[0-9]+$');
+bool onlyNumbers(String? text) {
+  final pattern = RegExp(r'^[1-9]\d*(\.\d+)?$');
   return pattern.hasMatch(textOrEmpty(text));
 }
 

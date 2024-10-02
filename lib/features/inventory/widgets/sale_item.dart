@@ -18,33 +18,37 @@ class SaleItem extends StatelessWidget {
           size: 20.0,
           align: TextAlign.left,
         ),
-        subtitle: Builder(builder: (context) {
-          final product = saleProduct.product;
-          final productPrice = product.sellingPrice;
-          final quantity = saleProduct.quantity;
-          return VaaruText(
-            '${price(productPrice)} × ${number(quantity)} = ${price(productPrice * quantity)}',
-            align: TextAlign.left,
-          );
-        }),
-        trailing: Builder(builder: (context) {
-          final saleProvider = provider<SaleProvider>(context);
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              VaaruIconButton(
-                icon: Icons.remove_rounded,
-                color: error,
-                onPressed: () => saleProvider.removeSaleItem(saleProduct.product.id),
-              ),
-              const Gap(h: 5.0),
-              VaaruIconButton(
-                icon: Icons.add_rounded,
-                color: primary,
-                onPressed: () => saleProvider.addSaleItem(saleProduct.product),
-              ),
-            ],
-          );
-        }),
+        subtitle: Builder(
+          builder: (context) {
+            final product = saleProduct.product;
+            final productPrice = product.sellingPrice;
+            final quantity = saleProduct.quantity;
+            return VaaruText(
+              '${price(productPrice)} × ${number(quantity)} = ${price(productPrice * quantity)}',
+              align: TextAlign.left,
+            );
+          },
+        ),
+        trailing: Builder(
+          builder: (context) {
+            final saleProvider = provider<SaleProvider>(context);
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                VaaruIconButton(
+                  icon: saleProduct.quantity > 1 ? Icons.remove_rounded : Icons.delete_rounded,
+                  color: error,
+                  onPressed: () => saleProvider.removeSaleItem(saleProduct.product.id),
+                ),
+                const Gap(h: 5.0),
+                VaaruIconButton(
+                  icon: Icons.add_rounded,
+                  color: primary,
+                  onPressed: () => saleProvider.addSaleItem(saleProduct.product),
+                ),
+              ],
+            );
+          },
+        ),
       );
 }

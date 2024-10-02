@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kandy_hotel/utils/actions.dart';
-import 'package:kandy_hotel/utils/methods.dart';
 import 'package:kandy_hotel/widgets/gap.dart';
 import 'package:kandy_hotel/widgets/vaaru_tff.dart';
 
@@ -10,16 +8,12 @@ class ProductForm extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController buyingPriceController;
   final TextEditingController sellingPriceController;
-  final String? existingImageUrl;
-  final GlobalKey<SliverAnimatedListState>? listKey;
   const ProductForm({
     super.key,
     required this.formKey,
     required this.nameController,
     required this.buyingPriceController,
     required this.sellingPriceController,
-    this.existingImageUrl,
-    this.listKey,
   });
 
   @override
@@ -47,7 +41,7 @@ class _ProductFormState extends State<ProductForm> {
               controller: widget.nameController,
               labelText: 'Name',
               autofocus: true,
-              validator: (text) => textOrEmpty(text).isEmpty ? 'Required!' : null,
+              require: true,
               onFieldSubmitted: (_) => _sellingPriceFocus.requestFocus(),
             ),
             const Gap(v: 15.0),
@@ -56,8 +50,8 @@ class _ProductFormState extends State<ProductForm> {
               focusNode: _sellingPriceFocus,
               labelText: 'Selling Price',
               prefixText: 'Rs. ',
-              formatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]*$'))],
-              validator: (text) => textOrEmpty(text).isEmpty ? 'Required!' : null,
+              require: true,
+              onlyDecimals: true,
               onFieldSubmitted: (_) => _buyingPriceFocus.requestFocus(),
             ),
             const Gap(v: 15.0),
@@ -66,8 +60,8 @@ class _ProductFormState extends State<ProductForm> {
               focusNode: _buyingPriceFocus,
               labelText: 'Buying Price',
               prefixText: 'Rs. ',
-              formatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]*$'))],
-              validator: (text) => textOrEmpty(text).isEmpty ? 'Required!' : null,
+              require: true,
+              onlyDecimals: true,
               onFieldSubmitted: (_) {
                 if (widget.formKey.currentState!.validate()) {
                   pop(context, result: true);
