@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kandy_hotel/utils/constants.dart';
 
 import 'vaaru_text.dart';
 
@@ -43,7 +44,8 @@ class VaaruDropDown<T> extends StatelessWidget {
               (item) => DropdownMenuItem(
                 value: item.value,
                 onTap: item.onTap,
-                child: VaaruText(item.label),
+                enabled: item.enabled,
+                child: VaaruText(item.label, color: !item.enabled ? grey : null),
               ),
             )
             .toList(),
@@ -83,10 +85,12 @@ class VDDItem<T> {
   final String label;
   final T value;
   final void Function()? onTap;
+  final bool enabled;
 
   VDDItem({
     required this.label,
     required this.value,
     this.onTap,
+    this.enabled = true,
   });
 }

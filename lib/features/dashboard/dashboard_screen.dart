@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kandy_hotel/features/inquiry/inquiry_screen.dart';
 import 'package:kandy_hotel/features/inventory/inventory_screen.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/utils/actions.dart';
@@ -53,7 +54,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const Gap(h: 10.0),
                 Expanded(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => navigate(
+                      context,
+                      route: InquiryScreen.page,
+                    ),
                     borderRadius: BorderRadius.circular(20.0),
                     child: Card(
                       elevation: 5.0,

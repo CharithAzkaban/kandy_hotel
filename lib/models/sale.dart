@@ -23,4 +23,12 @@ class Sale extends HiveObject {
     required this.discount,
     required this.createdAt,
   });
+
+  double get netProfit => products.fold(0.0, (profit, saleProduct) {
+        final product = saleProduct.product;
+        final productProfit = product.sellingPrice - product.buyingPrice;
+        return profit + productProfit * saleProduct.quantity;
+      });
+
+  double get totalPrice => products.fold(0.0, (total, product) => total + (product.quantity * product.product.sellingPrice));
 }

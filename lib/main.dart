@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'providers/auth_provider.dart';
+import 'providers/inquiry_provider.dart';
 import 'services/system_services.dart';
 import 'utils/attributes.dart';
 
@@ -39,6 +40,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => InquiryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => SaleProvider()),
       ],

@@ -6,6 +6,7 @@ enum Boxes {
 enum Debounces {
   FILTER,
   LOADING,
+  PICK_DATE,
 }
 
 enum Images {
@@ -19,6 +20,7 @@ enum Prefs {
 
 enum Routes {
   dashboard,
+  inquiry,
   inventory,
   landing,
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kandy_hotel/features/dashboard/dashboard_screen.dart';
+import 'package:kandy_hotel/features/inquiry/inquiry_screen.dart';
 import 'package:kandy_hotel/features/inventory/inventory_screen.dart';
 import 'package:kandy_hotel/features/landing/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,10 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/${ets(DashboardScreen.page)}',
       builder: (context, state) => const DashboardScreen(),
+    ),
+    GoRoute(
+      path: '/${ets(InquiryScreen.page)}',
+      builder: (context, state) => const InquiryScreen(),
     ),
     GoRoute(
       path: '/${ets(InventoryScreen.page)}',
@@ -37,8 +42,7 @@ RoundedRectangleBorder rrBorder(
       side: side,
     );
 
-Future<SharedPreferences> get sPrefs async =>
-    await SharedPreferences.getInstance();
+Future<SharedPreferences> get sPrefs async => await SharedPreferences.getInstance();
 
 final primary = hexColor('#1FAD78');
 final secondary = hexColor('#3FDCA2');
@@ -50,3 +54,5 @@ final success = hexColor('#00B300');
 final warn = hexColor('#FFA407');
 
 var isSignedIn = false;
+
+final today = DateTime.now();
