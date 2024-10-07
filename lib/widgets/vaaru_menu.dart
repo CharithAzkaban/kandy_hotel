@@ -8,6 +8,7 @@ class VaaruMenu<T> extends StatelessWidget {
   final void Function(T)? onSelected;
   final String? tooltip;
   final Widget? icon;
+  final Color? iconColor;
   final Color? fillColor;
   const VaaruMenu({
     super.key,
@@ -15,13 +16,14 @@ class VaaruMenu<T> extends StatelessWidget {
     required this.onSelected,
     this.tooltip,
     this.icon,
+    this.iconColor,
     this.fillColor,
   });
 
   @override
   Widget build(BuildContext context) => PopupMenuButton<T>(
         onSelected: onSelected,
-        iconColor: white,
+        iconColor: iconColor,
         tooltip: tooltip,
         icon: icon,
         style: IconButton.styleFrom(backgroundColor: fillColor),

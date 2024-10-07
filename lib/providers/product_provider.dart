@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:kandy_hotel/features/inventory/widgets/product_inquiry_list.dart';
 import 'package:kandy_hotel/models/product.dart';
+import 'package:kandy_hotel/models/sale_product.dart';
+import 'package:kandy_hotel/services/inquiry_services.dart';
 import 'package:kandy_hotel/services/product_services.dart';
 import 'package:kandy_hotel/utils/actions.dart';
 import 'package:kandy_hotel/utils/attributes.dart';
 import 'package:kandy_hotel/utils/constants.dart';
 import 'package:kandy_hotel/utils/enums.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ProductProvider extends ChangeNotifier {
   final _products = <Product>[];
@@ -118,5 +122,30 @@ class ProductProvider extends ChangeNotifier {
             notifyListeners();
           },
         ),
+      );
+
+  void showProductInquiry(
+    BuildContext context, {
+    required PickerDateRange? dateRange,
+    required Product product,
+  }) =>
+      waiting(
+        context,
+        waitingMessage: 'Loading product sales...',
+        process: () => InquiryServices.getSalesByDateRange(
+          start: dateRange?.startDate,
+          end: dateRange?.endDate ?? dateRange?.startDate,
+        ),
+        afterProcessed: (sales) {
+          final saleProducts = <SaleProduct>[];
+          for (final sale in sales) {
+            saleProducts.addAll(sale.products.where((element) => element.product.id == product.id));
+          }
+          popup(
+            context,
+            title: product.name,
+            body: ProductInquiryList(sales, product: product),
+          );
+        },
       );
 }

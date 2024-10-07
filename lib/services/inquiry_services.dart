@@ -27,4 +27,28 @@ class InquiryServices {
     }
     return sales;
   }
+
+  static Future<List<Sale>> getSalesByDateRange({
+    required DateTime? start,
+    required DateTime? end,
+  }) async {
+    final saleBox = await openHiveBox<Sale>(Boxes.sales);
+    final allSales = saleBox.values;
+    final sales = <Sale>[];
+    final dates = _getDates(start, end);
+    for (final initDate in dates) {
+      sales.addAll(allSales.where((element) => areSameDates(element.createdAt, initDate)));
+    }
+    return sales;
+  }
+
+  static List<DateTime> _getDates(DateTime? startDate, DateTime? endDate) {
+    List<DateTime> dateTimes = [];
+    if (startDate != null && endDate != null) {
+      for (DateTime date = startDate; date.isBefore(endDate) || date.isAtSameMomentAs(endDate); date = date.add(const Duration(days: 1))) {
+        dateTimes.add(date);
+      }
+    }
+    return dateTimes;
+  }
 }

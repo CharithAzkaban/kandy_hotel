@@ -56,7 +56,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: primary,
-            title: const VaaruText('Inquiry'),
+            title: const VaaruText('Inquiry', color: white),
           ),
           body: Padding(
             padding: const EdgeInsets.all(10.0),

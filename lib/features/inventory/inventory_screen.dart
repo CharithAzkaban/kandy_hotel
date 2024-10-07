@@ -50,7 +50,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           backgroundColor: primary,
-          title: const VaaruText('Inventory'),
+          title: const VaaruText('Inventory', color: white),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -70,7 +70,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: white),
+                    border: Border.all(color: grey),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: CustomScrollView(
@@ -141,7 +141,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: white),
+                    border: Border.all(color: grey),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: Column(
@@ -220,7 +220,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     final nameController = TextEditingController();
     final buyingPriceController = TextEditingController();
     final sellingPriceController = TextEditingController();
-    final isOk = await popup<bool>(
+    popup<bool>(
       context,
       title: 'Add Product',
       cancelLabel: 'DISMISS',
@@ -237,24 +237,26 @@ class _InventoryScreenState extends State<InventoryScreen> {
           popResult: true,
         ),
       ],
+      onValue: (isOk) {
+        if (isOk != null && isOk && context.mounted) {
+          _productProvider.addProduct(
+            context,
+            name: nameController.text.trim(),
+            buyingPrice: double.parse(buyingPriceController.text.trim()),
+            sellingPrice: double.parse(sellingPriceController.text.trim()),
+            searchController: _searchController,
+          );
+        }
+        return null;
+      },
     );
-
-    if (isOk != null && isOk && context.mounted) {
-      _productProvider.addProduct(
-        context,
-        name: nameController.text.trim(),
-        buyingPrice: double.parse(buyingPriceController.text.trim()),
-        sellingPrice: double.parse(sellingPriceController.text.trim()),
-        searchController: _searchController,
-      );
-    }
   }
 
   void _sale(BuildContext context) async {
     final formKey = GlobalKey<FormState>();
     final discountController = TextEditingController();
     final saleProvider = provider<SaleProvider>(context);
-    final isOk = await popup<bool>(
+    popup<bool>(
       context,
       title: 'Make Sale',
       cancelLabel: 'DISMISS',
@@ -270,13 +272,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
           popResult: true,
         ),
       ],
+      onValue: (isOk) {
+        if (isOk != null && isOk && context.mounted) {
+          saleProvider.makeSale(
+            context,
+            discount: double.tryParse(discountController.text.trim()),
+          );
+        }
+        return null;
+      },
     );
-
-    if (isOk != null && isOk && context.mounted) {
-      saleProvider.makeSale(
-        context,
-        discount: double.tryParse(discountController.text.trim()),
-      );
-    }
   }
 }

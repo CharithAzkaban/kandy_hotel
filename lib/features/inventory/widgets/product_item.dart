@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kandy_hotel/features/inventory/widgets/product_date_range_box.dart';
 import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/providers/sale_provider.dart';
@@ -12,6 +13,7 @@ import 'package:kandy_hotel/widgets/vaaru_icon_button.dart';
 import 'package:kandy_hotel/widgets/vaaru_menu.dart';
 import 'package:kandy_hotel/widgets/vaaru_text.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'product_form.dart';
 
@@ -71,6 +73,7 @@ class ProductItem extends StatelessWidget {
             Consumer<SaleProvider>(builder: (context, saleData, _) {
               final isAdded = saleData.saleItems.where((element) => element.product.id == product.id).isNotEmpty;
               return VaaruMenu(
+                iconColor: primary,
                 tooltip: product.name,
                 items: [
                   VaaruMenuItem(
@@ -85,6 +88,12 @@ class ProductItem extends StatelessWidget {
                     color: error,
                     enabled: !isAdded,
                   ),
+                  VaaruMenuItem(
+                    value: 3,
+                    label: 'INQUIRY',
+                    color: blue,
+                    enabled: !isAdded,
+                  ),
                 ],
                 onSelected: (value) {
                   final productProvider = provider<ProductProvider>(context);
@@ -95,6 +104,26 @@ class ProductItem extends StatelessWidget {
                     productProvider.removeProduct(
                       context,
                       product: product,
+                    );
+                  }
+                  if (value == 3) {
+                    PickerDateRange? selectedRange;
+                    popup<PickerDateRange?>(
+                      context,
+                      title: product.name,
+                      cancelColor: blue,
+                      cancelLabel: "DONE",
+                      body: ProductDateRangeBox(onSelected: (range) => selectedRange = range),
+                      onValue: (_) {
+                        if (selectedRange != null) {
+                          productProvider.showProductInquiry(
+                            context,
+                            dateRange: selectedRange,
+                            product: product,
+                          );
+                        }
+                        return null;
+                      },
                     );
                   }
                 },
@@ -114,7 +143,7 @@ class ProductItem extends StatelessWidget {
     final nameController = TextEditingController(text: product.name);
     final buyingPriceController = TextEditingController(text: number(product.buyingPrice));
     final sellingPriceController = TextEditingController(text: number(product.sellingPrice));
-    final isOk = await popup<bool>(
+    popup<bool>(
       context,
       title: 'Modify Product',
       cancelLabel: 'DISMISS',
@@ -131,17 +160,19 @@ class ProductItem extends StatelessWidget {
           popResult: true,
         ),
       ],
+      onValue: (isOk) {
+        if (isOk != null && isOk && context.mounted) {
+          provider<ProductProvider>(context).editProduct(
+            context,
+            key: product.key,
+            id: product.id,
+            name: nameController.text.trim(),
+            buyingPrice: double.parse(buyingPriceController.text.trim()),
+            sellingPrice: double.parse(sellingPriceController.text.trim()),
+          );
+        }
+        return null;
+      },
     );
-
-    if (isOk != null && isOk && context.mounted) {
-      provider<ProductProvider>(context).editProduct(
-        context,
-        key: product.key,
-        id: product.id,
-        name: nameController.text.trim(),
-        buyingPrice: double.parse(buyingPriceController.text.trim()),
-        sellingPrice: double.parse(sellingPriceController.text.trim()),
-      );
-    }
   }
 }

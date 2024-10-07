@@ -121,7 +121,7 @@ void pop<T>(
   }
 }
 
-Future<T?> popup<T>(
+void popup<T>(
   BuildContext context, {
   required String? title,
   Widget? icon,
@@ -134,6 +134,7 @@ Future<T?> popup<T>(
   Color? cancelColor,
   double? elevation,
   bool careBack = true,
+  FutureOr<T?> Function(T?)? onValue,
 }) =>
     showDialog<T>(
       context: context,
@@ -167,7 +168,7 @@ Future<T?> popup<T>(
               : null,
         ),
       ),
-    );
+    ).then(onValue ?? (_) => null);
 
 void waitAndDo(
   int milliseconds,

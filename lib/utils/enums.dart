@@ -11,6 +11,7 @@ enum Debounces {
 
 enum Images {
   logo,
+  background,
 }
 
 enum Prefs {
