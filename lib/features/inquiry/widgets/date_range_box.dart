@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kandy_hotel/utils/actions.dart';
+import 'package:kandy_hotel/utils/attributes.dart';
 import 'package:kandy_hotel/utils/constants.dart';
 import 'package:kandy_hotel/utils/enums.dart';
-import 'package:kandy_hotel/utils/methods.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateRangeBox extends StatelessWidget {
@@ -20,7 +20,7 @@ class DateRangeBox extends StatelessWidget {
         height: 300.0,
         child: SfDateRangePicker(
           minDate: monthDate,
-          maxDate: lastDayOfMonth(monthDate),
+          maxDate: today,
           selectionShape: DateRangePickerSelectionShape.rectangle,
           selectionMode: DateRangePickerSelectionMode.range,
           headerHeight: 0.0,

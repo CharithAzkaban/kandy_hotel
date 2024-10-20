@@ -7,6 +7,7 @@ class ProductServices {
     required String name,
     required double buyingPrice,
     required double sellingPrice,
+    required double avbQuantity,
   }) async {
     final productBox = await openHiveBox<Product>(Boxes.products);
     final product = Product(
@@ -14,6 +15,7 @@ class ProductServices {
       name: name,
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,
+      avbQuantity: avbQuantity,
     );
     await productBox.add(product);
     productBox.close();
@@ -26,6 +28,7 @@ class ProductServices {
     required String name,
     required double buyingPrice,
     required double sellingPrice,
+    required double avbQuantity,
   }) async {
     final productBox = await openHiveBox<Product>(Boxes.products);
     final editedProduct = Product(
@@ -33,6 +36,7 @@ class ProductServices {
       name: name,
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,
+      avbQuantity: avbQuantity,
     );
     await productBox.put(key, editedProduct);
     productBox.close();

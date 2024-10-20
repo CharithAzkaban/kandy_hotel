@@ -22,6 +22,7 @@ class ProductProvider extends ChangeNotifier {
     required String name,
     required double buyingPrice,
     required double sellingPrice,
+    required double avbQuantity,
     required TextEditingController searchController,
   }) =>
       waiting(
@@ -31,6 +32,7 @@ class ProductProvider extends ChangeNotifier {
           name: name,
           buyingPrice: buyingPrice,
           sellingPrice: sellingPrice,
+          avbQuantity: avbQuantity,
         ),
         afterProcessed: (product) {
           _products.add(product);
@@ -49,6 +51,7 @@ class ProductProvider extends ChangeNotifier {
     required String name,
     required double buyingPrice,
     required double sellingPrice,
+    required double avbQuantity,
   }) =>
       waiting(
         context,
@@ -59,6 +62,7 @@ class ProductProvider extends ChangeNotifier {
           name: name,
           buyingPrice: buyingPrice,
           sellingPrice: sellingPrice,
+          avbQuantity: avbQuantity,
         ),
         afterProcessed: (product) {
           final index = _products.indexWhere((element) => element.id == product.id);
@@ -89,14 +93,22 @@ class ProductProvider extends ChangeNotifier {
         },
       );
 
-  void loadProducts(BuildContext context) => waiting(
+  void loadProducts(
+    BuildContext context, {
+    bool notify = false,
+  }) =>
+      waiting(
         context,
         waitingMessage: 'Loading products...',
         process: () => ProductServices.getProducts(),
         afterProcessed: (products) {
           _products.clear();
+          _filteredProducts.clear();
           _products.addAll(products);
           _filteredProducts.addAll(products);
+          if (notify) {
+            notifyListeners();
+          }
         },
       );
 

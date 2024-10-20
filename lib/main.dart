@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:kandy_hotel/models/product.dart';
-import 'package:kandy_hotel/models/sale.dart';
-import 'package:kandy_hotel/models/sale_product.dart';
+import 'package:kandy_hotel/models/deduction.dart';
+import 'package:kandy_hotel/providers/deduction_provider.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/providers/sale_provider.dart';
 import 'package:local_notifier/local_notifier.dart';
@@ -11,6 +10,9 @@ import 'package:material_color_generator/material_color_generator.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'models/product.dart';
+import 'models/sale.dart';
+import 'models/sale_product.dart';
 import 'providers/auth_provider.dart';
 import 'providers/inquiry_provider.dart';
 import 'services/system_services.dart';
@@ -31,6 +33,7 @@ void main() async {
     await windowManager.show();
     await windowManager.focus();
   });
+  windowManager.setTitle('New Orchid Cafe ${await getVersion()}');
 
   await checkForUpdates(background: true);
 
@@ -40,6 +43,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => DeductionProvider()),
         ChangeNotifierProvider(create: (_) => InquiryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => SaleProvider()),
@@ -51,6 +55,7 @@ void main() async {
 
 void _initDatabase() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(DeductionAdapter());
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(SaleAdapter());
   Hive.registerAdapter(SaleProductAdapter());

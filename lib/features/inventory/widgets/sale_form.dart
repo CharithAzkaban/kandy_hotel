@@ -68,7 +68,6 @@ class _SaleFormState extends State<SaleForm> {
               controller: _cohController,
               autofocus: true,
               onlyDecimals: true,
-              require: true,
               labelText: 'Cash on hand',
               prefixText: 'Rs. ',
               onFieldSubmitted: (_) => _discountFocus.requestFocus(),

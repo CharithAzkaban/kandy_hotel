@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kandy_hotel/models/product.dart';
 import 'package:kandy_hotel/models/sale_product.dart';
+import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/services/sale_services.dart';
 import 'package:kandy_hotel/utils/actions.dart';
 import 'package:kandy_hotel/utils/attributes.dart';
 import 'package:kandy_hotel/utils/constants.dart';
+import 'package:kandy_hotel/utils/methods.dart';
 
 class SaleProvider extends ChangeNotifier {
   final _saleItems = <SaleProduct>[];
@@ -14,15 +16,22 @@ class SaleProvider extends ChangeNotifier {
   double get total => _total;
 
   void addSaleItem(Product product) {
-    final existingIndex = _saleItems.indexWhere((element) => element.product.id == product.id);
-    if (existingIndex != -1) {
-      final existingProduct = _saleItems.removeAt(existingIndex);
-      _saleItems.insert(existingIndex, existingProduct.setQuantity(existingProduct.quantity + 1));
-    } else {
-      _saleItems.add(SaleProduct(product: product, quantity: 1));
+    if (product.avbQuantity > 0.0) {
+      final existingIndex = _saleItems.indexWhere((element) => element.product.id == product.id);
+      if (existingIndex != -1) {
+        final existingProduct = _saleItems[existingIndex];
+        if (existingProduct.quantity < product.avbQuantity) {
+          _saleItems.removeAt(existingIndex);
+          _saleItems.insert(existingIndex, existingProduct.setQuantity(existingProduct.quantity + 1));
+          _total = _saleItems.fold(0.0, (sum, item) => sum + item.product.sellingPrice * item.quantity);
+          notifyListeners();
+        }
+      } else {
+        _saleItems.add(SaleProduct(product: product, quantity: 1));
+        _total = _saleItems.fold(0.0, (sum, item) => sum + item.product.sellingPrice * item.quantity);
+        notifyListeners();
+      }
     }
-    _total = _saleItems.fold(0.0, (sum, item) => sum + item.product.sellingPrice * item.quantity);
-    notifyListeners();
   }
 
   void clearCart(BuildContext context) => confirm(
@@ -54,6 +63,7 @@ class SaleProvider extends ChangeNotifier {
           _total = 0.0;
           notify(title: 'Sold', body: 'A new sale has been made successfully.');
           notifyListeners();
+          provider<ProductProvider>(context).loadProducts(context, notify: true);
         },
       );
 

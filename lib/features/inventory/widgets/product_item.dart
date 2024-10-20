@@ -65,6 +65,13 @@ class ProductItem extends StatelessWidget {
                 ],
               ),
             ),
+            const Gap(h: 20.0),
+            VaaruText(
+              product.avbQuantity == 0.0 ? 'Out of Stock' : '${number(product.avbQuantity, unit: 'unit')} available',
+              align: TextAlign.left,
+              weight: FontWeight.bold,
+              color: product.avbQuantity < 5 ? error : null,
+            ),
           ],
         ),
         trailing: Row(
@@ -92,6 +99,12 @@ class ProductItem extends StatelessWidget {
                     value: 3,
                     label: 'INQUIRY',
                     color: blue,
+                    enabled: !isAdded,
+                  ),
+                  VaaruMenuItem(
+                    value: 4,
+                    label: 'RETURN',
+                    color: warn,
                     enabled: !isAdded,
                   ),
                 ],
@@ -143,6 +156,7 @@ class ProductItem extends StatelessWidget {
     final nameController = TextEditingController(text: product.name);
     final buyingPriceController = TextEditingController(text: number(product.buyingPrice));
     final sellingPriceController = TextEditingController(text: number(product.sellingPrice));
+    final avbQuantityController = TextEditingController(text: number(product.avbQuantity));
     popup<bool>(
       context,
       title: 'Modify Product',
@@ -152,6 +166,7 @@ class ProductItem extends StatelessWidget {
         nameController: nameController,
         buyingPriceController: buyingPriceController,
         sellingPriceController: sellingPriceController,
+        avbQuantityController: avbQuantityController,
       ),
       actions: [
         PopupAction(
@@ -169,6 +184,7 @@ class ProductItem extends StatelessWidget {
             name: nameController.text.trim(),
             buyingPrice: double.parse(buyingPriceController.text.trim()),
             sellingPrice: double.parse(sellingPriceController.text.trim()),
+            avbQuantity: double.parse(avbQuantityController.text.trim()),
           );
         }
         return null;

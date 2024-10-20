@@ -55,7 +55,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
   Widget build(BuildContext context) => UnfocusWrapper(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: primary,
+            backgroundColor: blue,
             title: const VaaruText('Inquiry', color: white),
           ),
           body: Padding(
@@ -133,6 +133,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
                             final dateString = selectedDateRange != null ? '${date(startDate)} - ${date(endDate)}' : 'Dates';
                             return VaaruButton(
                               label: dateString,
+                              backgroundColor: blue,
                               onPressed: selectedYear != null && selectedMonth != null
                                   ? () {
                                       final monthDate = DateTime(selectedYear, selectedMonth);
@@ -154,6 +155,33 @@ class _InquiryScreenState extends State<InquiryScreen> {
                       ],
                     ),
                   ),
+                  actions: [
+                    Consumer<InquiryProvider>(builder: (context, inqData, _) {
+                      final sales = inqData.sales;
+                      final total = sales.fold(0.0, (subTotal, sale) => subTotal + sale.totalPrice);
+                      final profit = sales.fold(0.0, (subTotal, sale) => subTotal + sale.netProfit);
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 30.0),
+                        child: Row(
+                          children: [
+                            VaaruText(
+                              price(total),
+                              color: blue,
+                              size: 18.0,
+                              weight: FontWeight.bold,
+                            ),
+                            const Gap(h: 20.0),
+                            VaaruText(
+                              price(profit),
+                              color: success,
+                              size: 18.0,
+                              weight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      );
+                    })
+                  ],
                 ),
                 Consumer<InquiryProvider>(
                   builder: (context, inqData, _) {

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
     <channel>
-        <title>Kandy Hotel</title>
-        <description>Most recent updates to Kandy Hotel</description>
+        <title>New Orchid Cafe</title>
+        <description>Most recent updates to New Orchid Cafe</description>
         <language>en</language>
         <item>
-            <title>Version 1.0.1</title>
+            <title>Version 1.0.4</title>
             <pubDate>Fri, 01 Mar 2024 12:00:00 +0800</pubDate>
             <enclosure url="https://charithazkaban.github.io/updates/setup.exe"
-                       sparkle:dsaSignature="MD4CHQCfv9NXP6Pdq6PbwMJn+pL4EWvoygX2IjDmH7RUAh0AzAxAUbkkRNDhsMmRS/pH+0ThDAVm9rt3TOsf0w=="
-                       sparkle:version="1.0.1+2"
+                       sparkle:dsaSignature="MD0CHERTNnlgVPrMb4JmNL3UysL4mhrA6lgCKiYmosECHQC1AIkhpgci+xP4YMJ2Id7Rzrp7FC8g4UAvrAWK"
+                       sparkle:version="1.0.4+1"
                        sparkle:os="windows"
                        length="0"
                        type="application/octet-stream" />

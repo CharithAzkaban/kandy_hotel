@@ -1,4 +1,5 @@
 enum Boxes {
+  deductions,
   products,
   sales,
 }
@@ -21,6 +22,7 @@ enum Prefs {
 
 enum Routes {
   dashboard,
+  deductions,
   inquiry,
   inventory,
   landing,

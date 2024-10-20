@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: "none"
 
-version: 1.0.1+2
+version: 1.0.4+1
 
 environment:
   sdk: ^3.5.2
@@ -28,6 +28,7 @@ dependencies:
   material_color_generator: ^1.1.0
   money_formatter: ^0.0.6
   multi_value_listenable_builder: ^0.0.2
+  package_info_plus: ^8.0.3
   provider: ^6.1.2
   shared_preferences: ^2.2.3
   syncfusion_flutter_datepicker: ^27.1.51

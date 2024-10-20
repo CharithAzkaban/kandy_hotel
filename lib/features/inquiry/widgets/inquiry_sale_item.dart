@@ -16,7 +16,7 @@ class InquirySaleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         title: VaaruText(
-          date(sale.createdAt),
+          date(sale.createdAt, format: 'dd MMM yyyy, hh:mm a'),
           size: 20.0,
           align: TextAlign.left,
         ),

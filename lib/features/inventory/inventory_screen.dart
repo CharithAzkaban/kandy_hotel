@@ -114,6 +114,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       Consumer<ProductProvider>(
                         builder: (context, productData, _) {
                           final products = productData.filteredProducts;
+                          products.sort((a, b) => a.name.compareTo(b.name));
                           return products.isNotEmpty
                               ? SliverList.separated(
                                   itemBuilder: (context, index) => ProductItem(products[index]),
@@ -220,6 +221,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     final nameController = TextEditingController();
     final buyingPriceController = TextEditingController();
     final sellingPriceController = TextEditingController();
+    final avbQuantityController = TextEditingController();
     popup<bool>(
       context,
       title: 'Add Product',
@@ -229,6 +231,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         nameController: nameController,
         buyingPriceController: buyingPriceController,
         sellingPriceController: sellingPriceController,
+        avbQuantityController: avbQuantityController,
       ),
       actions: [
         PopupAction(
@@ -244,6 +247,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             name: nameController.text.trim(),
             buyingPrice: double.parse(buyingPriceController.text.trim()),
             sellingPrice: double.parse(sellingPriceController.text.trim()),
+            avbQuantity: double.parse(avbQuantityController.text.trim()),
             searchController: _searchController,
           );
         }

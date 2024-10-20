@@ -16,10 +16,22 @@ class Product extends HiveObject {
   @HiveField(3)
   double sellingPrice;
 
+  @HiveField(4)
+  double avbQuantity;
+
   Product({
     required this.id,
     required this.name,
     required this.buyingPrice,
     required this.sellingPrice,
+    required this.avbQuantity,
   });
+
+  Product changeQuantity(double quantity) => Product(
+        id: id,
+        name: name,
+        buyingPrice: buyingPrice,
+        sellingPrice: sellingPrice,
+        avbQuantity: quantity,
+      );
 }

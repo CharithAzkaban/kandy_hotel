@@ -8,12 +8,14 @@ class ProductForm extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController buyingPriceController;
   final TextEditingController sellingPriceController;
+  final TextEditingController avbQuantityController;
   const ProductForm({
     super.key,
     required this.formKey,
     required this.nameController,
     required this.buyingPriceController,
     required this.sellingPriceController,
+    required this.avbQuantityController,
   });
 
   @override
@@ -23,11 +25,13 @@ class ProductForm extends StatefulWidget {
 class _ProductFormState extends State<ProductForm> {
   final _sellingPriceFocus = FocusNode();
   final _buyingPriceFocus = FocusNode();
+  final _avbQuantityFocus = FocusNode();
 
   @override
   void dispose() {
     _sellingPriceFocus.dispose();
     _buyingPriceFocus.dispose();
+    _avbQuantityFocus.dispose();
     super.dispose();
   }
 
@@ -60,6 +64,15 @@ class _ProductFormState extends State<ProductForm> {
               focusNode: _buyingPriceFocus,
               labelText: 'Buying Price',
               prefixText: 'Rs. ',
+              require: true,
+              onlyDecimals: true,
+              onFieldSubmitted: (_) => _avbQuantityFocus.requestFocus(),
+            ),
+            const Gap(v: 15.0),
+            VaaruTff(
+              controller: widget.avbQuantityController,
+              focusNode: _avbQuantityFocus,
+              labelText: 'Available Quantity',
               require: true,
               onlyDecimals: true,
               onFieldSubmitted: (_) {
