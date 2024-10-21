@@ -34,6 +34,28 @@ class SaleProvider extends ChangeNotifier {
     }
   }
 
+  void addSaleItemBulk(
+    Product product, {
+    required double quantity,
+  }) {
+    if (product.avbQuantity > 0.0) {
+      final existingIndex = _saleItems.indexWhere((element) => element.product.id == product.id);
+      if (existingIndex != -1) {
+        final existingProduct = _saleItems[existingIndex];
+        if (existingProduct.quantity < product.avbQuantity) {
+          _saleItems.removeAt(existingIndex);
+          _saleItems.insert(existingIndex, existingProduct.setQuantity(quantity));
+          _total = _saleItems.fold(0.0, (sum, item) => sum + item.product.sellingPrice * item.quantity);
+          notifyListeners();
+        }
+      } else {
+        _saleItems.add(SaleProduct(product: product, quantity: quantity));
+        _total = _saleItems.fold(0.0, (sum, item) => sum + item.product.sellingPrice * item.quantity);
+        notifyListeners();
+      }
+    }
+  }
+
   void clearCart(BuildContext context) => confirm(
         context,
         confirmMessage: 'Do you want to clear the cart?',

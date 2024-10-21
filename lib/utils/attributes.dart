@@ -5,6 +5,7 @@ import 'package:kandy_hotel/features/deductions/deductions_screen.dart';
 import 'package:kandy_hotel/features/inquiry/inquiry_screen.dart';
 import 'package:kandy_hotel/features/inventory/inventory_screen.dart';
 import 'package:kandy_hotel/features/landing/landing_screen.dart';
+import 'package:kandy_hotel/features/returns/returns_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'methods.dart';
@@ -34,6 +35,10 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/${ets(LandingScreen.page)}',
       builder: (context, state) => const LandingScreen(),
+    ),
+    GoRoute(
+      path: '/${ets(ReturnsScreen.page)}',
+      builder: (context, state) => const ReturnsScreen(),
     ),
   ],
 );

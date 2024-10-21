@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kandy_hotel/models/deduction.dart';
+import 'package:kandy_hotel/models/return_product.dart';
 import 'package:kandy_hotel/providers/deduction_provider.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
+import 'package:kandy_hotel/providers/return_provider.dart';
 import 'package:kandy_hotel/providers/sale_provider.dart';
 import 'package:local_notifier/local_notifier.dart';
 import 'package:material_color_generator/material_color_generator.dart';
@@ -46,6 +48,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => DeductionProvider()),
         ChangeNotifierProvider(create: (_) => InquiryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ReturnProvider()),
         ChangeNotifierProvider(create: (_) => SaleProvider()),
       ],
       child: const Main(),
@@ -57,6 +60,7 @@ void _initDatabase() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DeductionAdapter());
   Hive.registerAdapter(ProductAdapter());
+  Hive.registerAdapter(ReturnProductAdapter());
   Hive.registerAdapter(SaleAdapter());
   Hive.registerAdapter(SaleProductAdapter());
 }

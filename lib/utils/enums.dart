@@ -1,6 +1,7 @@
 enum Boxes {
   deductions,
   products,
+  returns,
   sales,
 }
 
@@ -26,6 +27,7 @@ enum Routes {
   inquiry,
   inventory,
   landing,
+  returns,
 }
 
 enum StatusTypes {

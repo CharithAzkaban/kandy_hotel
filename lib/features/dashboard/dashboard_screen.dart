@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kandy_hotel/features/deductions/deductions_screen.dart';
 import 'package:kandy_hotel/features/inquiry/inquiry_screen.dart';
 import 'package:kandy_hotel/features/inventory/inventory_screen.dart';
+import 'package:kandy_hotel/features/returns/returns_screen.dart';
 import 'package:kandy_hotel/providers/product_provider.dart';
 import 'package:kandy_hotel/services/system_services.dart';
 import 'package:kandy_hotel/utils/actions.dart';
@@ -161,7 +162,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const Gap(h: 10.0),
                       Expanded(
                         child: InkWell(
-                          onTap: null,
+                          onTap: () => navigate(
+                            context,
+                            route: ReturnsScreen.page,
+                          ),
                           borderRadius: BorderRadius.circular(20.0),
                           child: Card(
                             elevation: 5.0,
@@ -179,7 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     VaaruText(
-                                      'Returns (COMING SOON)',
+                                      'Returns',
                                       size: 30.0,
                                     ),
                                     Icon(Icons.refresh_rounded, size: 100.0),

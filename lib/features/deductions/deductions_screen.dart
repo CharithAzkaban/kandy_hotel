@@ -193,7 +193,7 @@ class _DeductionsScreenState extends State<DeductionsScreen> {
                             child: SizedBox(
                               height: dHeight(context) * 0.8,
                               child: const Center(
-                                child: VaaruText('No sales available.'),
+                                child: VaaruText('No deductions available.'),
                               ),
                             ),
                           );

@@ -5,11 +5,11 @@
         <description>Most recent updates to New Orchid Cafe</description>
         <language>en</language>
         <item>
-            <title>Version 1.0.4</title>
-            <pubDate>Fri, 01 Mar 2024 12:00:00 +0800</pubDate>
+            <title>Version 1.0.5</title>
+            <pubDate>Mon, 21 Oct 2024 12:00:00 +0800</pubDate>
             <enclosure url="https://charithazkaban.github.io/updates/setup.exe"
-                       sparkle:dsaSignature="MD0CHERTNnlgVPrMb4JmNL3UysL4mhrA6lgCKiYmosECHQC1AIkhpgci+xP4YMJ2Id7Rzrp7FC8g4UAvrAWK"
-                       sparkle:version="1.0.4+1"
+                       sparkle:dsaSignature="MD0CHDH9dDeBzRmBRBtBMDp0q/G2mp2dtxhfy9zJ3pICHQCh5UNSBgqN70nSxLo+fvPtJs/cjVTchGarrgrl"
+                       sparkle:version="1.0.5+1"
                        sparkle:os="windows"
                        length="0"
                        type="application/octet-stream" />
